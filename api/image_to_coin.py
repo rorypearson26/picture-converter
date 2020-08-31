@@ -9,11 +9,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 from pathlib import Path as p
+import time
 
 def setup():
     """Function to deal with the main setup"""
     #File to be imported
-    file_name = p("murph1.jpg")
+    file_name = p("snow.jpg")
     pic_dir = p("TestImages")
     script_dir = p(__file__).resolve().parent
     file_path = script_dir / pic_dir / file_name
@@ -24,7 +25,7 @@ def setup():
     pic_width = img.shape[1]
     coin_size = 20
     time_per_coin = 10
-    percentage = sizer(1300, pic_width, coin_size)
+    percentage = sizer(4000, pic_width, coin_size)
     width = int(pic_width * percentage)
     height = int(img.shape[0] * percentage)
     dim = (width, height)
@@ -83,8 +84,8 @@ def coin_pixels(colour_arr, dim, mod_img, coin_size, axarr):
             colour = colour_randomiser(colour, 10) / 255
             mod_img[x, y, 1:4] = colour
             circle = plt.Circle((coin_plt_adjuster(y, coin_size),
-                                 -1 * coin_plt_adjuster(x, coin_size)),
-                                coin_size * 0.5, color=colour)
+                                -1 * coin_plt_adjuster(x, coin_size)),
+                               coin_size * 0.5, color=colour)
             axarr[1].add_artist(circle)
 
 def output(coin_size, dim, time_per_coin, mod_img, fig, axarr):
@@ -114,7 +115,9 @@ def main():
     fig, axarr = plt.subplots(1, 2)
     coin_pixels(colour_arr, dim, mod_img, coin_size, axarr)
     output(coin_size, dim, time_per_coin, mod_img, fig, axarr)
-    input('press <ENTER> to continue')
+    #input('press <ENTER> to continue')
 
 if __name__ == '__main__':
+    start_time = time.time()
     main()
+    print(f"Time taken {(time.time() - start_time)} secs")

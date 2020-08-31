@@ -1,0 +1,52 @@
+@import "bootstrap";
+$SLIDER-HEIGHT: 50px;
+$PILL-WIDTH: 80px;
+
+.slider {
+  -webkit-appearance: none;
+  width: 90%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: none;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  @extend .m-2;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4caf50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: calc($SLIDER-HEIGHT/2);
+  border-radius: 50%;
+  background: #4caf50;
+  cursor: pointer;
+}
+
+.custom-pill {
+  @extend .badge;
+  @extend .badge-pill;
+  @extend .badge-success;
+  @extend .m-2;
+  padding-top: $SLIDER-HEIGHT/10;
+  padding-bottom: $SLIDER-HEIGHT/10;
+  width: $PILL-WIDTH;
+  margin-top: calc(height/2);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  height: $SLIDER-HEIGHT;
+  position: relative;
+}
