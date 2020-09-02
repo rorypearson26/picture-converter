@@ -3,18 +3,18 @@ import "./slider.scss";
 
 class Slider extends Component {
   render() {
-    const { slider, onChange } = this.props;
+    const { onChange, defaultValue, min, max } = this.props;
     return (
       <div className="container">
         <input
           className="slider"
           type="range"
-          min="0"
-          max="255"
-          defaultValue={slider.value}
-          onChange={(e) => onChange(e, slider)}
+          min={min}
+          max={max}
+          value={defaultValue}
+          onChange={(e) => onChange(e, this.props)}
         />
-        <div className="custom-pill">{slider.value}</div>
+        <div className="custom-pill">{defaultValue}</div>
       </div>
     );
   }
