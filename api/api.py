@@ -1,13 +1,21 @@
-import time
-from flask import Flask
+from flask import Flask, jsonify, request
+import image_to_coin
 
+# configuration
+DEBUG = True
+
+# instantiate the app
 app = Flask(__name__)
 
-@app.route('/time')
-def get_current_time():
-    t = dict()
-    t["time"] = time.time()
-    return t
+# sanity check route
+@app.route('/imagetransfer', methods=['POST', 'GET'])
+def ping_pong():
+    if request.method == 'POST':
+        print('in post-back-end')
+        data=request.files['image']
+        image_to_coin.setup(data)
+    return "in back-end"
 
 
-    
+if __name__ == '__main__':
+    app.run()

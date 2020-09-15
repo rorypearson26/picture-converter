@@ -1,0 +1,108 @@
+@import "bootstrap";
+
+$w: 100%;
+$h: 2rem;
+$thumbWidth: $h/2;
+$shadowLength: $thumbWidth/2 + 1000rem;
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.my-container {
+  border: 2px solid rgba(0, 0, 0, 0.233);
+  box-shadow: 0 0 2rem 1rem #c4c4c4;
+  border-radius: 1rem;
+}
+
+.my-row {
+  border: 2px solid greenyellow;
+}
+
+.slider-row {
+  position: relative;
+  height: $h * 1.6;
+  @extend .mt-2;
+  @extend .row;
+  @extend .align-items-center;
+}
+
+.my-col {
+  border: 2px dashed blue;
+}
+
+@mixin track() {
+  width: 100%;
+  overflow: hidden;
+  height: $h;
+  background: none; /* get rid of Firefox track background */
+}
+
+@mixin thumb($side) {
+  border: 0.2rem solid rgb(11, 0, 43);
+  border-radius: 0.2rem;
+  width: $thumbWidth;
+  height: $h;
+  pointer-events: auto;
+  cursor: pointer;
+
+  @if ($side == "low") {
+    box-shadow: -$shadowLength 0 0 1000rem #ffffff;
+    background: #048b5f;
+  } @else if($side == "high") {
+    box-shadow: -$shadowLength 0 0 1000rem #b9f5e1;
+    background: #048b5f;
+  }
+}
+
+.wrap {
+  display: grid;
+  overflow: hidden;
+  position: relative;
+  width: $w;
+  background: linear-gradient(0deg, rgba(119, 248, 151, 0) $h, transparent 0);
+}
+
+input[type="range"] {
+  &::-webkit-slider-runnable-track,
+  &::-webkit-slider-thumb,
+  & {
+    -webkit-appearance: none;
+  }
+  height: $h;
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  background: none; /* get rid of white Chrome background */
+  color: #000;
+  font: inherit; /* fix too small font-size in both Chrome & Firefox */
+  pointer-events: none;
+  outline: none !important;
+  box-shadow: none !important;
+
+  &::-webkit-slider-runnable-track {
+    @include track();
+  }
+  &::-moz-range-track {
+    @include track();
+  }
+
+  &.low::-webkit-slider-thumb {
+    @include thumb($side: "low");
+  }
+  &.low::-moz-range-thumb {
+    @include thumb($side: "low");
+  }
+  &.high::-webkit-slider-thumb {
+    @include thumb($side: "high");
+  }
+  &.high::-moz-range-thumb {
+    @include thumb($side: "high");
+  }
+}

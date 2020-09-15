@@ -1,14 +1,26 @@
 import React, { Component } from "react";
-import Sliders from "./common/sliders";
+import Sliders from "./sliders";
+import FileUpload from "./common/fileUpload";
+import "./sliders.scss";
+import "../App.css";
 
 class Home extends Component {
   render() {
     return (
-      <div>
-        <div className="d-flex justify-content-center">
-          <Sliders />
+      <React.Fragment>
+        <div className="jumbotron">Coin Mosaic</div>
+        <div
+          className="container
+           my-container"
+        >
+          <div className="row ">
+            <Sliders />
+          </div>
+          <div className="row ">
+            <FileUpload />
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

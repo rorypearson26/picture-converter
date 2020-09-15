@@ -11,17 +11,13 @@ import random
 from pathlib import Path as p
 import time
 
-def setup():
+def setup(myFile):
     """Function to deal with the main setup"""
     #File to be imported
-    file_name = p("snow.jpg")
-    pic_dir = p("TestImages")
-    script_dir = p(__file__).resolve().parent
-    file_path = script_dir / pic_dir / file_name
-    print(file_path)
+ 
 
     #Setup scaling of image
-    img = cv2.imread(str(file_path), cv2.IMREAD_GRAYSCALE)
+    img = cv2.imdecode(np.fromstring(myFile.read(), np.uint8), cv2.IMREAD_GRAYSCALE)
     pic_width = img.shape[1]
     coin_size = 20
     time_per_coin = 10
@@ -31,7 +27,7 @@ def setup():
     dim = (width, height)
     img = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
 
-    #Setup of intensity / colour matrix for coin colours
+    # Setup of intensity / colour matrix for coin colours
     colour_arr = np.array([[225, 205, 127, 50],
                            [190, 78, 117, 102],
                            [150, 130, 81, 31],
