@@ -6,7 +6,7 @@ import "./sliders.scss";
 
 class ColourPicker extends Component {
   render() {
-    const { diameter, colour, defaultValue, onChange } = this.props;
+    const { diameter, colour, defaultValue, onColourChange } = this.props;
     const circleStyle = {
       color: "white",
       borderRadius: "50%",
@@ -19,7 +19,7 @@ class ColourPicker extends Component {
       boxShadow: "-5px 5px 5px 5px #c9c9c9",
     };
     return (
-      <div className="row  justify-content-center">
+      <div className="row justify-content-center">
         <Popup
           trigger={
             <div
@@ -35,9 +35,8 @@ class ColourPicker extends Component {
             color={colour}
             disableAlpha={true}
             onChange={(selectedColour) =>
-              onChange({ ...this.props, selectedColour })
+              onColourChange({ ...this.props, selectedColour })
             }
-            style={{ display: "none" }}
           />
         </Popup>
       </div>

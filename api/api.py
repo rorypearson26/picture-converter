@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, json,request
 import image_to_coin
 
 # configuration
@@ -12,9 +12,11 @@ app = Flask(__name__)
 def ping_pong():
     if request.method == 'POST':
         print('in post-back-end')
-        data=request.files['image']
-        image_to_coin.setup(data)
-    return "in back-end"
+        image=request.files['image']
+        user_input=json.loads(request.form['userInput'])
+        res = image_to_coin.main(image, user_input)
+        # res=image_to_coin.setup(image,user_input)
+    return "SUCCESS"
 
 
 if __name__ == '__main__':

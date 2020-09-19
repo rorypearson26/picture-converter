@@ -5,7 +5,11 @@ import Home from "./components/home";
 class App extends Component {
   state = {};
   render() {
-    return <Home />;
+    return (
+      <div className="App">
+        <Home />
+      </div>
+    );
   }
 }
 

@@ -93,8 +93,9 @@ class Slider extends Component {
 
     return sliders;
   }
+
   render() {
-    const { onChange, lowVal, highVal, min, max } = this.props;
+    const { onSliderChange, lowVal, highVal, min, max } = this.props;
     return (
       <div className="wrap" role="group">
         <input
@@ -104,7 +105,7 @@ class Slider extends Component {
           min={min}
           max={max}
           value={highVal}
-          onChange={(e) => onChange({ ...this.props, e })}
+          onChange={(e) => onSliderChange({ ...this.props, e })}
         />
         <input
           id="lowVal"
@@ -113,7 +114,7 @@ class Slider extends Component {
           min={min}
           max={max}
           value={lowVal}
-          onChange={(e) => onChange({ ...this.props, e })}
+          onChange={(e) => onSliderChange({ ...this.props, e })}
         />
       </div>
     );

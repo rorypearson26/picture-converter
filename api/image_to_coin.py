@@ -6,43 +6,60 @@ results.
 """
 from cv2 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 import random
-from pathlib import Path as p
 import time
 
-def setup(myFile):
+class Input:
+    def __init__(self, image, user_input):
+        self.time = user_input['data']['time']
+        self.desired_width = user_input['data']['width']
+        self.coin_size = user_input['data']['coinSize']
+        self.sliders = user_input['sliders']
+        self.img = cv2.imdecode(np.fromstring(image.read(), np.uint8), cv2.IMREAD_GRAYSCALE)
+        self.actual_height = self.img.shape[0]
+        self.actual_width = self.img.shape[1]
+        self.sizer()
+        
+
+    def sizer(self):
+        coins_in_width = self.desired_width / self.coin_size
+        self.percentage = coins_in_width / self.actual_width
+
+
+class Output:
+    def __init__(self, user_input):
+        self.colour_array = None
+        self.width = None
+        self.height = None
+        self.mod_img(user_input)
+
+    def mod_img(self, user_input):
+        raw_img = np.array(user_input.img)
+        mod_img = np.empty((raw_img[:].shape[0], raw_img[:].shape[1]))
+        mod_img[:, :] = raw_img
+        self.coin_array = mod_img
+
+
+def setup(image, user_input):
     """Function to deal with the main setup"""
-    #File to be imported
- 
-
+    u = Input(image, user_input)
+    out = Output(u)
+    print(u.coin_size)
     #Setup scaling of image
-    img = cv2.imdecode(np.fromstring(myFile.read(), np.uint8), cv2.IMREAD_GRAYSCALE)
-    pic_width = img.shape[1]
-    coin_size = 20
-    time_per_coin = 10
-    percentage = sizer(4000, pic_width, coin_size)
-    width = int(pic_width * percentage)
-    height = int(img.shape[0] * percentage)
-    dim = (width, height)
-    img = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+    # u.percentage = sizer(u)
+    # u.post.width = int(u.actual_width * u.percentage)
+    # u.post.height = int(u.img.shape[0] * u.percentage)
+    # dim = (u.post.width, u.post.height)
+    # u.img = cv2.resize(u.img, dim, interpolation=cv2.INTER_AREA)
 
-    # Setup of intensity / colour matrix for coin colours
-    colour_arr = np.array([[225, 205, 127, 50],
-                           [190, 78, 117, 102],
-                           [150, 130, 81, 31],
-                           [40, 85, 65, 0]])
-    raw_img = np.array(img)
-    mod_img = np.empty((raw_img[:].shape[0], raw_img[:].shape[1], 4))
-    mod_img[:, :, 0] = raw_img
-    result = (mod_img, colour_arr, dim, coin_size, time_per_coin)
-    return result
+    
+    # raw_img = np.array(u.img)
+    # mod_img = np.empty((raw_img[:].shape[0], raw_img[:].shape[1], 4))
+    # mod_img[:, :, 0] = raw_img
+    # result = [mod_img, u]
+    # return result
 
-def sizer(desired_width, pic_width, coin_size):
-    """Set up output mosaic size according to the passed parameters"""
-    coins_in_width = desired_width / coin_size
-    percentage = coins_in_width / pic_width
-    return percentage
+
 
 def coin_plt_adjuster(coordinate, coin_size):
     """Adjust the location of the circle cordinates that represent coins"""
@@ -100,20 +117,22 @@ def output(coin_size, dim, time_per_coin, mod_img, fig, axarr):
     print('Expected time to complete of ',
           (time_per_coin * dim[0] * dim[1])/3600, 'hours')
 
-def main():
+def main(image, user_input):
     """Entry point for code to be run"""
-    setup_result = setup()
-    mod_img = setup_result[0]         #3D np array ready to populate
-    colour_arr = setup_result[1]      #2D np array of colour/intensity info
-    dim = setup_result[2]             #List in form of (width, height)
-    coin_size = setup_result[3]       #Coin used size
-    time_per_coin = setup_result[4]   #Rough time in seconds per coin to set
-    fig, axarr = plt.subplots(1, 2)
-    coin_pixels(colour_arr, dim, mod_img, coin_size, axarr)
-    output(coin_size, dim, time_per_coin, mod_img, fig, axarr)
+    setup(image, user_input)
+    # return setup_result[1]
+    # setup_result = setup()
+    # mod_img = setup_result[0]         #3D np array ready to populate
+    # colour_arr = setup_result[1]      #2D np array of colour/intensity info
+    # dim = setup_result[2]             #List in form of (width, height)
+    # coin_size = setup_result[3]       #Coin used size
+    # time_per_coin = setup_result[4]   #Rough time in seconds per coin to set
+    # fig, axarr = plt.subplots(1, 2)
+    # coin_pixels(colour_arr, dim, mod_img, coin_size, axarr)
+    # output(coin_size, dim, time_per_coin, mod_img, fig, axarr)
     #input('press <ENTER> to continue')
-
-if __name__ == '__main__':
-    start_time = time.time()
-    main()
-    print(f"Time taken {(time.time() - start_time)} secs")
+# Setup of intensity / colour matrix for coin colours
+    # colour_arr = np.array([[225, 205, 127, 50],
+    #                        [190, 78, 117, 102],
+    #                        [150, 130, 81, 31],
+    #                        [40, 85, 65, 0]])

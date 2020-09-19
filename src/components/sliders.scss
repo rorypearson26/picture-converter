@@ -45,7 +45,7 @@ $shadowLength: $thumbWidth/2 + 1000rem;
 }
 
 @mixin thumb($side) {
-  border: 0.2rem solid rgb(11, 0, 43);
+  border: 0.15rem solid rgb(11, 0, 43);
   border-radius: 0.2rem;
   width: $thumbWidth;
   height: $h;
