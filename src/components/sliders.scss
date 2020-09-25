@@ -17,8 +17,9 @@ $shadowLength: $thumbWidth/2 + 1000rem;
 
 .my-container {
   border: 2px solid rgba(0, 0, 0, 0.233);
-  box-shadow: 0 0 2rem 1rem #c4c4c4;
+  box-shadow: 0 0 2rem 1rem #964040;
   border-radius: 1rem;
+  position: relative;
 }
 
 .my-row {

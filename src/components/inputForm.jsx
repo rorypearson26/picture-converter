@@ -6,21 +6,23 @@ import ColourPicker from "./colourPicker";
 import Form from "./common/form";
 import Joi from "joi-browser";
 import "./sliders.scss";
+import "./styling.scss";
 
 class InputForm extends Form {
   state = {
     limits: { min: 0, max: 255 },
     sliders: [
-      { id: 0, lowVal: 0, highVal: 20, enabled: true, colour: "#048B5F" },
-      { id: 1, lowVal: 20, highVal: 30, enabled: true, colour: "#A86727" },
-      { id: 2, lowVal: 30, highVal: 50, enabled: true, colour: "#784222" },
-      { id: 3, lowVal: 50, highVal: 140, enabled: true, colour: "#612b09" },
-      { id: 4, lowVal: 140, highVal: 255, enabled: true, colour: "#411c06" },
+      { id: 0, lowVal: 0, highVal: 30, enabled: true, colour: "#290F02" },
+      { id: 1, lowVal: 30, highVal: 100, enabled: true, colour: "#612B09" },
+      { id: 2, lowVal: 100, highVal: 200, enabled: true, colour: "#784222" },
+      { id: 3, lowVal: 200, highVal: 255, enabled: true, colour: "#A86727" },
+      // { id: 4, lowVal: 200, highVal: 255, enabled: true, colour: "#BD7616" },
     ],
+
     minGap: 4,
-    data: { width: 1200, time: 30, coinSize: 20.3 },
+    data: { width: 1600, time: 30, coinSize: 20.3 },
     errors: {},
-    backgroundColour: "#000",
+    backgroundColour: "#000000",
   };
 
   schema = {
@@ -77,7 +79,13 @@ class InputForm extends Form {
     const { onClick, onChange } = this.props;
 
     return (
-      <form autoComplete="off" className="container my-container">
+      <form autoComplete="off" className="my-container-clipped p-2">
+        <div className="row ">
+          <FileUpload
+            onChange={onChange}
+            onClick={() => onClick({ ...this.state })}
+          />
+        </div>
         <div className="row ">
           <Sliders
             limits={limits}
@@ -87,7 +95,7 @@ class InputForm extends Form {
             onColourChange={this.handleColourChange}
           />
         </div>
-        <div className="row p-2 mt-4">
+        <div className="row p-2 mt-2">
           <div className="col-xs-12 col-md-4 p-2 ">
             {this.renderInput({
               name: "width",
@@ -104,7 +112,7 @@ class InputForm extends Form {
           </div>
           <div className="col-xs-12 col-md-4 p-2">
             {this.renderInput({
-              name: "coinSize",
+              name: "coinWidth",
               label: "Coin diameter in mm",
               defaultValue: data.coinSize,
             })}
@@ -123,12 +131,6 @@ class InputForm extends Form {
               onColourChange={this.handleColourChange}
             />
           </div>
-        </div>
-        <div className="row ">
-          <FileUpload
-            onChange={onChange}
-            onClick={() => onClick({ ...this.state })}
-          />
         </div>
       </form>
     );

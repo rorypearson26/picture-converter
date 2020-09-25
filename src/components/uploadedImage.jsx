@@ -21,24 +21,31 @@ class UploadedImage extends Component {
   }
 
   render() {
+    const file = UploadedImage.srcFormatter(this.props.file);
     const styles = {
       container: {
         flex: 1,
         flexDirection: "row",
         alignItems: "stretch",
+        width: "100%",
       },
       cover: {
         flex: 1,
         width: null,
         height: null,
       },
+      fill: {
+        objectFit: "cover",
+        // overflow: "hidden",
+        // backgroundSize: "cover",
+        // backgroundPosition: "center",
+        // backgroundImage: { file },
+      },
     };
-    const file = UploadedImage.srcFormatter(this.props.file);
+
     return (
-      <div className="my-container-clipped">
-        <div style={styles.container}>
-          <Image src={file} alt="This has not gone well" fluid />
-        </div>
+      <div>
+        <Image src={file} alt="This has not gone well" fluid />
       </div>
     );
   }

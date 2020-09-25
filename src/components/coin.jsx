@@ -2,18 +2,8 @@ import React, { Component } from "react";
 
 class Coin extends Component {
   render() {
-    const { diameter, colour } = this.props;
-    const circleStyle = {
-      padding: 5,
-      margin: 0,
-      display: "inline-block",
-      backgroundColor: colour,
-      borderRadius: "50%",
-      width: diameter,
-      height: diameter,
-    };
-    return <div style={circleStyle}></div>;
+    const { cx, cy, colour } = this.props;
+    return <circle cx={cx} cy={cy} r="0.5" fill={colour} />;
   }
 }
-
 export default Coin;

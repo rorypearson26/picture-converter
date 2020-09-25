@@ -9,7 +9,7 @@ class Sliders extends Component {
     const enabledSliders = sliders.filter((s) => s.enabled);
 
     return (
-      <div className="container">
+      <div className="container m-2">
         {enabledSliders.map((slider) => (
           <div className="slider-row" key={slider.id}>
             <div key={"colour1" + slider.id} className="col-2" align="center">
