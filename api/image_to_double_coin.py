@@ -23,6 +23,8 @@ class Input:
         self.actual_width = self.img.shape[1]
         self.bg_colour = user_input['backgroundColour']
         self.sizer()
+        print("coin size is", user_input['data']['coinSize'])
+        print("Time", user_input['data']['time'])
 
     def sizer(self):
         coins_in_width = (self.desired_width / self.coin_size) 
@@ -85,13 +87,6 @@ class InnerMosaic:
         inner_img = input_object.img[ pixels_in_half_coin : bottom_limit,pixels_in_half_coin : right_limit,]
         self.pixel_array = cv2.resize(inner_img, (self.width, self.height), interpolation=cv2.INTER_AREA)
         self.coin_array = np.empty([self.height, self.width], dtype=('U20'))
-
-
-    
-                
-
-    
-
 
 def setup(image, user_input):
     """Function to deal with the main setup"""

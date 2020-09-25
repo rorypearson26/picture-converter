@@ -42,6 +42,7 @@ class Home extends Component {
 
   async handleUpload(mystuff) {
     const { file } = this.state;
+    console.log(mystuff);
     if (UploadedImage.validURL(file)) {
       toast.error("Need to select an image");
       return;

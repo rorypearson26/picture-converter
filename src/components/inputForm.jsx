@@ -28,12 +28,12 @@ class InputForm extends Form {
   schema = {
     width: Joi.number().min(100).max(3000).required().label("Width in mm"),
     time: Joi.number().min(5).max(300).required().label("Time in seconds"),
-    coinWidth: Joi.number()
+    coinSize: Joi.number()
       .precision(1)
       .min(15)
       .max(30)
       .required()
-      .label("Coin width in mm"),
+      .label("Coin diameter in mm"),
   };
 
   handleSliderChange = (props) => {
@@ -112,7 +112,7 @@ class InputForm extends Form {
           </div>
           <div className="col-xs-12 col-md-4 p-2">
             {this.renderInput({
-              name: "coinWidth",
+              name: "coinSize",
               label: "Coin diameter in mm",
               defaultValue: data.coinSize,
             })}
