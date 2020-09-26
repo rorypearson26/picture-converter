@@ -12,17 +12,18 @@ class InputForm extends Form {
   state = {
     limits: { min: 0, max: 255 },
     sliders: [
-      { id: 0, lowVal: 0, highVal: 30, enabled: true, colour: "#290F02" },
+      { id: 0, lowVal: 0, highVal: 30, enabled: true, colour: "#411401" },
       { id: 1, lowVal: 30, highVal: 100, enabled: true, colour: "#612B09" },
-      { id: 2, lowVal: 100, highVal: 200, enabled: true, colour: "#784222" },
-      { id: 3, lowVal: 200, highVal: 255, enabled: true, colour: "#A86727" },
+      { id: 2, lowVal: 100, highVal: 200, enabled: true, colour: "#8C3D0E" },
+      { id: 3, lowVal: 200, highVal: 255, enabled: true, colour: "#C76B0F" },
       // { id: 4, lowVal: 200, highVal: 255, enabled: true, colour: "#BD7616" },
     ],
 
-    minGap: 4,
+    minGap: 10,
     data: { width: 1600, time: 30, coinSize: 20.3 },
     errors: {},
     backgroundColour: "#000000",
+    initialSliderState: [],
   };
 
   schema = {
@@ -122,7 +123,7 @@ class InputForm extends Form {
           <div className="col-6 text-center">
             <h4>Select background colour:</h4>
           </div>
-          <div className="col-6 text-center ">
+          <div className="col-6 text-center">
             <ColourPicker
               colour={backgroundColour}
               diameter="80"

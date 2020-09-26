@@ -22,9 +22,8 @@ class Input:
         self.actual_height = self.img.shape[0]
         self.actual_width = self.img.shape[1]
         self.bg_colour = user_input['backgroundColour']
+        self.min_gap = int(user_input['minGap'])
         self.sizer()
-        print("coin size is", user_input['data']['coinSize'])
-        print("Time", user_input['data']['time'])
 
     def sizer(self):
         coins_in_width = (self.desired_width / self.coin_size) 
@@ -52,29 +51,16 @@ class OuterMosaic:
     def __init__(self, input_object):
         self.width = int(input_object.actual_width * input_object.percentage)
         self.height = int(input_object.actual_height * input_object.percentage)
+        self.sliders = input_object.sliders
+        self.min_gap = input_object.min_gap
+        self.limits = input_object.limits
         self.actual_width = input_object.actual_width
         self.actual_height = input_object.actual_height
         self.bg_colour = input_object.bg_colour
         self.pixel_array = cv2.resize(input_object.img, (self.width, self.height), interpolation=cv2.INTER_AREA)
         self.coin_array = np.empty([self.height, self.width], dtype=('U20'))
-        self.optimise_range(input_object)
 
-    def optimise_range(self, user_input):
-        intensities = np.copy(self.pixel_array).flatten()
-        sorted = np.sort(intensities)
-        bins = len(user_input.sliders) - 1
-        i = 0
-        slider_count = 0
-        coin_total = len(intensities) 
-        increment = int(round(coin_total / bins))
-        while (slider_count < bins and i < coin_total):
-            if (i % increment == 0 and i != 0):
-                # user_input.sliders[slider_count]["highVal"] = sorted[i]
-                # user_input.sliders[slider_count+1]["lowVal"] = sorted[i]
-                print(f'slider highval {sorted[i]}')
-                slider_count += 1
-            i += 1
-
+    
 class InnerMosaic:
     """InnerMosaic object repesents the secondary optional layer to add resolution.
     The image is cropped by the equivalent of a coin radius of each edge."""
@@ -95,6 +81,7 @@ def setup(image, user_input):
     inner = InnerMosaic(outer, u)
     return (u, outer, inner)
 
+
 def pixels_to_coins(sliders, limits, mosaic_obj):
     
     for i in range(0, mosaic_obj.height):
@@ -103,14 +90,24 @@ def pixels_to_coins(sliders, limits, mosaic_obj):
                 intensity = mosaic_obj.pixel_array[i,j]
                 if((slider['lowVal']<=intensity) and (intensity<slider['highVal']) 
                 or (intensity == limits['max'])):
-                    my_colour = colour_randomiser(ImageColor.getrgb(slider['colour']))
+                    my_colour = colour_randomiser(intensity, slider, ImageColor.getrgb(slider['colour']))
                     mosaic_obj.coin_array[i,j] = my_colour
 
 
-def colour_randomiser(colour):
-    """Subtly adjust coin colours so not an unrealistic block colour"""
+def colour_randomiser(intensity, slider, colour):
+    """Subtly adjust coin colours so not an unrealistic block colour. The randomness value is also
+    adjusted depending on whether the intensity value is close the slider min or max."""
     colour_new = np.empty(3, dtype=int)
-    randomness = uniform(0.85,1.15)
+    deviation = 0.2
+    high_delta = slider['highVal'] - intensity
+    low_delta = intensity - slider['lowVal']
+
+    if high_delta <= low_delta: 
+        randomness = uniform(1, 1 + deviation)
+    else:
+        randomness = uniform(1 - deviation, 1)
+
+    # randomness = uniform(1 - deviation/2, 1 +deviation/2)
     for i, hue in enumerate(colour):
         colour_rand = int(randomness * hue)
        
@@ -130,17 +127,16 @@ def main(image, user_input):
 
     input_object, outer, inner = setup(image, user_input)
 
-    pixels_to_coins(input_object.sliders, input_object.limits, outer)
-    pixels_to_coins(input_object.sliders, input_object.limits, inner)
-
+    pixels_to_coins(outer.sliders, input_object.limits, outer)
+    pixels_to_coins(outer.sliders, input_object.limits, inner)
 
     outer.coin_array = outer.coin_array.tolist()
     inner.coin_array = inner.coin_array.tolist()
+
     del outer.pixel_array, inner.pixel_array
     output = Output(outer, inner)
     pounds = (inner.width*inner.height + outer.height * outer.width)/100
     time_taken = int(round(time.time() * 1000)) - start_time
     print(f'{time_taken}ms')
-    print(f'Money is {pounds}')
     return output.full_JSON
 

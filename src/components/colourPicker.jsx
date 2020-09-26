@@ -1,12 +1,25 @@
 import React, { Component } from "react";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
-import { ChromePicker } from "react-color";
+import ModalPopUp from "./modalPopUp";
 import "./sliders.scss";
 
 class ColourPicker extends Component {
+  state = {
+    showModal: false,
+  };
+
+  toggleModal = () =>
+    this.setState({
+      showModal: !this.state.showModal,
+    });
+
   render() {
-    const { diameter, colour, defaultValue, onColourChange } = this.props;
+    const {
+      diameter,
+      colour,
+      defaultValue,
+      onColourChange,
+      ...rest
+    } = this.props;
     const circleStyle = {
       color: "white",
       borderRadius: "50%",
@@ -20,25 +33,20 @@ class ColourPicker extends Component {
     };
     return (
       <div className="row justify-content-center">
-        <Popup
-          trigger={
-            <div
-              className="noselect"
-              style={{ ...circleStyle, backgroundColor: colour }}
-            >
-              {defaultValue}
-            </div>
-          }
-          position="left center"
+        <div
+          className="noselect"
+          style={{ ...circleStyle, backgroundColor: colour }}
+          onClick={this.toggleModal}
         >
-          <ChromePicker
-            color={colour}
-            disableAlpha={true}
-            onChange={(selectedColour) =>
-              onColourChange({ ...this.props, selectedColour })
-            }
-          />
-        </Popup>
+          {defaultValue}
+        </div>
+        <ModalPopUp
+          toggle={this.toggleModal}
+          showModal={this.state.showModal}
+          colour={colour}
+          onColourChange={onColourChange}
+          {...rest}
+        />
       </div>
     );
   }

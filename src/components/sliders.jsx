@@ -10,6 +10,14 @@ class Sliders extends Component {
 
     return (
       <div className="container m-2">
+        <div className="row justify-content-between">
+          <div className="col-2 d-flex justify-content-center">
+            <p>MIN</p>
+          </div>
+          <div className="col-2 d-flex justify-content-center">
+            <p>MAX</p>
+          </div>
+        </div>
         {enabledSliders.map((slider) => (
           <div className="slider-row" key={slider.id}>
             <div key={"colour1" + slider.id} className="col-2" align="center">

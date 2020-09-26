@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import Jumbo from "./jumbo";
 import InputForm from "./inputForm";
 import UploadedImage from "./uploadedImage";
 import Coins from "./coins";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { isEmpty } from "lodash";
+import loading from "../static/slow.gif";
 import "react-toastify/dist/ReactToastify.css";
+import "./styling.scss";
+import Image from "./common/image";
 
 class Home extends Component {
   state = {
@@ -17,12 +20,14 @@ class Home extends Component {
       height: "",
       coinArray: [],
       bgColour: "",
+      sliders: null,
     },
     innerResponseData: {
       width: "",
       height: "",
       coinArray: [],
     },
+    fetchInProgress: false,
   };
 
   handleFile(e) {
@@ -40,16 +45,20 @@ class Home extends Component {
     }
   }
 
-  async handleUpload(mystuff) {
+  async handleUpload(inputData) {
     const { file } = this.state;
-    console.log(mystuff);
     if (UploadedImage.validURL(file)) {
       toast.error("Need to select an image");
       return;
     }
+    if (!isEmpty(inputData.errors)) {
+      toast.error("Correct the error of your ways to proceed");
+      return;
+    }
     let formData = new FormData();
     formData.append("image", file);
-    formData.append("userInput", JSON.stringify(mystuff));
+    formData.append("userInput", JSON.stringify(inputData));
+    this.setState({ fetchInProgress: true });
     await axios({
       url: `/imagetransfer`,
       method: "POST",
@@ -82,8 +91,8 @@ class Home extends Component {
       displayCanvas: true,
       innerResponseData,
       outerResponseData,
+      fetchInProgress: false,
     });
-    // console.log(coinArray, bgColour);
   }
 
   render() {
@@ -92,32 +101,40 @@ class Home extends Component {
       displayUpload,
       innerResponseData,
       outerResponseData,
+      fetchInProgress,
     } = this.state;
     return (
       <React.Fragment>
-        <Jumbo />
-        <ToastContainer />
-        <div className="container">
-          <div className="row justify-content-center mb-4">
-            <div className="col-xs-12 col-md-6">
-              {displayUpload ? <UploadedImage file={this.state.file} /> : null}
-            </div>
-            <div className="col-xs-12 col-md-6">
-              {displayCanvas ? (
-                <Coins
-                  innerResponseData={innerResponseData}
-                  outerResponseData={outerResponseData}
+        {fetchInProgress ? (
+          <Image src={loading} />
+        ) : (
+          <div>
+            <ToastContainer />
+            <div className="container">
+              <div className="row justify-content-center mb-4">
+                <div className="col-xs-12 col-md-6">
+                  {displayUpload ? (
+                    <UploadedImage file={this.state.file} />
+                  ) : null}
+                </div>
+                <div className="col-xs-12 col-md-6">
+                  {displayCanvas ? (
+                    <Coins
+                      innerResponseData={innerResponseData}
+                      outerResponseData={outerResponseData}
+                    />
+                  ) : null}
+                </div>
+              </div>
+              <div className="mb-4">
+                <InputForm
+                  onChange={(e) => this.handleFile(e)}
+                  onClick={(e) => this.handleUpload(e)}
                 />
-              ) : null}
+              </div>
             </div>
           </div>
-          <div className="mb-4">
-            <InputForm
-              onChange={(e) => this.handleFile(e)}
-              onClick={(e) => this.handleUpload(e)}
-            />
-          </div>
-        </div>
+        )}
       </React.Fragment>
     );
   }

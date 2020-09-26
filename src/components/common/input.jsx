@@ -5,9 +5,9 @@ const Input = ({ name, label, error, type = "tel", ...rest }) => {
   Input.defaultProps = { type: "tel" };
   return (
     <div className="form-group m-2">
-      <small className="justify-content-center d-flex m-2" htmlFor={name}>
+      <p className="justify-content-center d-flex m-2" htmlFor={name}>
         {label}
-      </small>
+      </p>
       <input
         className="form-control text-center"
         {...rest}

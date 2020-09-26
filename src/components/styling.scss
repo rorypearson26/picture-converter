@@ -19,12 +19,17 @@
   border: 2px solid rgba(0, 0, 0, 0.233);
   border-radius: 2rem;
   position: relative;
-  // overflow: hidden;
 }
 
-@media only screen and (min-width: 1200px) {
-  .container {
-    max-width: 1600px !important;
+// @media only screen and (min-width: 1200px) {
+//   .container {
+//     max-width: 1600px !important;
+//   }
+// }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade {
+    transition: none !important;
   }
 }
 
