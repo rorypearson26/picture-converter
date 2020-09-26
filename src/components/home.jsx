@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import InputForm from "./inputForm";
 import UploadedImage from "./uploadedImage";
 import Coins from "./coins";
+import Slider from "./slider";
+import Image from "./common/image";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { isEmpty } from "lodash";
 import loading from "../static/slow.gif";
 import "react-toastify/dist/ReactToastify.css";
 import "./styling.scss";
-import Image from "./common/image";
 
 class Home extends Component {
   state = {
@@ -103,38 +104,47 @@ class Home extends Component {
       outerResponseData,
       fetchInProgress,
     } = this.state;
+
+    let imageStyle = {};
+    let mainStyle = {};
+
+    if (fetchInProgress) {
+      mainStyle = { display: "none" };
+    } else {
+      imageStyle = { display: "none" };
+    }
     return (
       <React.Fragment>
-        {fetchInProgress ? (
+        <div style={imageStyle}>
           <Image src={loading} />
-        ) : (
-          <div>
-            <ToastContainer />
-            <div className="container">
-              <div className="row justify-content-center mb-4">
-                <div className="col-xs-12 col-md-6">
-                  {displayUpload ? (
-                    <UploadedImage file={this.state.file} />
-                  ) : null}
-                </div>
-                <div className="col-xs-12 col-md-6">
-                  {displayCanvas ? (
-                    <Coins
-                      innerResponseData={innerResponseData}
-                      outerResponseData={outerResponseData}
-                    />
-                  ) : null}
-                </div>
+        </div>
+
+        <div style={mainStyle}>
+          <ToastContainer />
+          <div className="container">
+            <div className="row justify-content-center mb-4">
+              <div className="col-xs-12 col-md-6">
+                {displayUpload ? (
+                  <UploadedImage file={this.state.file} />
+                ) : null}
               </div>
-              <div className="mb-4">
-                <InputForm
-                  onChange={(e) => this.handleFile(e)}
-                  onClick={(e) => this.handleUpload(e)}
-                />
+              <div className="col-xs-12 col-md-6">
+                {displayCanvas ? (
+                  <Coins
+                    innerResponseData={innerResponseData}
+                    outerResponseData={outerResponseData}
+                  />
+                ) : null}
               </div>
             </div>
+            <div className="mb-4">
+              <InputForm
+                onChange={(e) => this.handleFile(e)}
+                onClick={(e) => this.handleUpload(e)}
+              />
+            </div>
           </div>
-        )}
+        </div>
       </React.Fragment>
     );
   }

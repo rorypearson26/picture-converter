@@ -23,7 +23,6 @@ class InputForm extends Form {
     data: { width: 1600, time: 30, coinSize: 20.3 },
     errors: {},
     backgroundColour: "#000000",
-    initialSliderState: [],
   };
 
   schema = {
