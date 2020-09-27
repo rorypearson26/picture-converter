@@ -69,9 +69,10 @@ class Coins extends Component {
     var svg = svgGhost.cloneNode(true);
     var s = new XMLSerializer();
     const { width, height } = this.downloadDimensions();
-    console.log(width, height);
+    const name = `CoinMosaic${width}x${height}.png`;
     svg.setAttribute("width", width);
     svg.setAttribute("height", height);
+    svg.setAttribute("name", name);
     canvas.width = width;
     canvas.height = height;
     var data = s.serializeToString(svg);
@@ -88,11 +89,7 @@ class Coins extends Component {
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = uri;
-      a.download =
-        (svg.id ||
-          svg.svg.getAttribute("name") ||
-          svg.getAttribute("aria-label") ||
-          "untitled") + ".png";
+      a.download = name;
       a.click();
       window.URL.revokeObjectURL(uri);
       document.body.removeChild(a);
@@ -109,7 +106,7 @@ class Coins extends Component {
           onClick={(mySVG) => this.handleOnClick(mySVG)}
           className="btn btn-primary m-2"
         >
-          Download pic
+          Download Image
         </button>
         <div id="d"></div>
         <br />

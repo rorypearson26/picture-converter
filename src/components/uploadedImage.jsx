@@ -22,27 +22,6 @@ class UploadedImage extends Component {
 
   render() {
     const file = UploadedImage.srcFormatter(this.props.file);
-    const styles = {
-      container: {
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "stretch",
-        width: "100%",
-      },
-      cover: {
-        flex: 1,
-        width: null,
-        height: null,
-      },
-      fill: {
-        objectFit: "cover",
-        // overflow: "hidden",
-        // backgroundSize: "cover",
-        // backgroundPosition: "center",
-        // backgroundImage: { file },
-      },
-    };
-
     return (
       <div>
         <Image src={file} alt="This has not gone well" fluid />

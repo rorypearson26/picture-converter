@@ -10,15 +10,18 @@ from PIL import ImageColor
 from random import randint, uniform
 import time
 from flask import Flask, json,request, jsonify
+from datetime import datetime, timedelta
+import math
+
 
 class Input:
     def __init__(self, image, user_input):
         self.time = int(user_input['data']['time'])
-        self.coin_size = int(user_input['data']['coinSize'])
+        self.coin_size = float(user_input['data']['coinSize'])
         self.sliders = user_input['sliders']
         self.limits = user_input['limits']
         self.img = cv2.imdecode(np.fromstring(image.read(), np.uint8), cv2.IMREAD_GRAYSCALE)
-        self.desired_width = int(user_input['data']['width'])
+        self.desired_width = float(user_input['data']['width'])
         self.actual_height = self.img.shape[0]
         self.actual_width = self.img.shape[1]
         self.bg_colour = user_input['backgroundColour']
@@ -51,14 +54,17 @@ class OuterMosaic:
     def __init__(self, input_object):
         self.width = int(input_object.actual_width * input_object.percentage)
         self.height = int(input_object.actual_height * input_object.percentage)
+        self.time = int(input_object.time)
         self.sliders = input_object.sliders
         self.min_gap = input_object.min_gap
         self.limits = input_object.limits
         self.actual_width = input_object.actual_width
         self.actual_height = input_object.actual_height
         self.bg_colour = input_object.bg_colour
+        self.coin_size = input_object.coin_size
         self.pixel_array = cv2.resize(input_object.img, (self.width, self.height), interpolation=cv2.INTER_AREA)
         self.coin_array = np.empty([self.height, self.width], dtype=('U20'))
+        self.stats = {}
 
     
 class InnerMosaic:
@@ -79,6 +85,7 @@ def setup(image, user_input):
     u = Input(image, user_input)
     outer = OuterMosaic(u)
     inner = InnerMosaic(outer, u)
+    get_stats(outer, inner)
     return (u, outer, inner)
 
 
@@ -90,8 +97,11 @@ def pixels_to_coins(sliders, limits, mosaic_obj):
                 intensity = mosaic_obj.pixel_array[i,j]
                 if((slider['lowVal']<=intensity) and (intensity<slider['highVal']) 
                 or (intensity == limits['max'])):
+                    my_colour = ImageColor.getrgb(slider['colour'])
+                    # colour_str=f"rgb({my_colour[0]},{my_colour[1]},{my_colour[2]})"
                     my_colour = colour_randomiser(intensity, slider, ImageColor.getrgb(slider['colour']))
                     mosaic_obj.coin_array[i,j] = my_colour
+                    # mosaic_obj.coin_array[i,j] = colour_str
 
 
 def colour_randomiser(intensity, slider, colour):
@@ -107,7 +117,6 @@ def colour_randomiser(intensity, slider, colour):
     else:
         randomness = uniform(1 - deviation, 1)
 
-    # randomness = uniform(1 - deviation/2, 1 +deviation/2)
     for i, hue in enumerate(colour):
         colour_rand = int(randomness * hue)
        
@@ -120,6 +129,45 @@ def colour_randomiser(intensity, slider, colour):
         
         colour_new_formatted = f"rgb({colour_new[0]},{colour_new[1]},{colour_new[2]})"
     return colour_new_formatted
+
+
+
+def get_stats(outer, inner=None):
+    """Function to create some stats about the mosaic being designed."""
+
+    outer_total_coins = outer.width * outer.height
+    inner_total_coins = 0
+    if(inner != None):
+        inner_total_coins = inner.width * inner.height
+   
+    total_coins = outer_total_coins + inner_total_coins
+    total_time_str = convert_timedelta(timedelta(seconds=int(total_coins * outer.time)))
+    total_mass = round(total_coins * coin_mass(outer.coin_size, 1.6), 1)
+    stat_dict = { "totalCoins" : total_coins, "totalTime" : total_time_str, "totalMass" : total_mass }
+    outer.stats = stat_dict
+
+
+def convert_timedelta(timedelta_seconds):
+    days = timedelta_seconds.days
+    hours = timedelta_seconds.seconds // 3600
+    minutes = (timedelta_seconds.seconds // 60) % 60
+    if (days == 1):
+        return_str = f'{days} Day, {hours} Hours, {minutes} Minutes'    
+    elif (days > 1):
+        return_str = f'{days} Days, {hours} Hours, {minutes} Minutes'
+    else:
+        return_str = f'{hours} Hours, {minutes} Minutes'
+
+    return return_str
+
+def coin_mass(coin_size, coin_thickness):
+    density = 7500.0 #kg/m^3
+    area = (((coin_size * 0.5) / 1000.0) ** 2) * math.pi
+    volume = (area * coin_thickness) / 1000.0
+    mass = density * volume
+    return mass
+
+
 
 def main(image, user_input):
     """Entry point for code to be run"""

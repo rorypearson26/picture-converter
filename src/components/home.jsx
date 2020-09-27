@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import InputForm from "./inputForm";
 import UploadedImage from "./uploadedImage";
 import Coins from "./coins";
-import Slider from "./slider";
-import Image from "./common/image";
+import Image from "react-bootstrap/Image";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { isEmpty } from "lodash";
 import loading from "../static/slow.gif";
 import "react-toastify/dist/ReactToastify.css";
 import "./styling.scss";
+import StatDisplay from "./statDisplay";
 
 class Home extends Component {
   state = {
@@ -17,11 +17,12 @@ class Home extends Component {
     displayCanvas: false,
     displayUpload: false,
     outerResponseData: {
-      width: "",
-      height: "",
-      coinArray: [],
-      bgColour: "",
+      width: null,
+      height: null,
+      coinArray: null,
+      bgColour: null,
       sliders: null,
+      stats: null,
     },
     innerResponseData: {
       width: "",
@@ -81,8 +82,9 @@ class Home extends Component {
       height,
       coin_array: coinArray,
       bg_colour: bgColour,
+      stats,
     } = result.outer;
-    outerResponseData = { width, height, coinArray, bgColour };
+    outerResponseData = { width, height, coinArray, bgColour, stats };
     console.log(result);
     if (result.inner !== "None") {
       const { width, height, coin_array: coinArray } = result.inner;
@@ -116,12 +118,19 @@ class Home extends Component {
     return (
       <React.Fragment>
         <div style={imageStyle}>
-          <Image src={loading} />
+          <div className="container">
+            <Image src={loading} alt="Loading..." fluid />
+          </div>
         </div>
 
         <div style={mainStyle}>
           <ToastContainer />
           <div className="container">
+            <div className="row justify-content-center mb-4">
+              {displayCanvas ? (
+                <StatDisplay data={outerResponseData.stats} />
+              ) : null}
+            </div>
             <div className="row justify-content-center mb-4">
               <div className="col-xs-12 col-md-6">
                 {displayUpload ? (

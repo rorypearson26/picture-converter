@@ -12,8 +12,8 @@ class InputForm extends Form {
   state = {
     limits: { min: 0, max: 255 },
     sliders: [
-      { id: 0, lowVal: 0, highVal: 30, enabled: true, colour: "#411401" },
-      { id: 1, lowVal: 30, highVal: 100, enabled: true, colour: "#612B09" },
+      { id: 0, lowVal: 0, highVal: 50, enabled: true, colour: "#2B0D01" },
+      { id: 1, lowVal: 50, highVal: 100, enabled: true, colour: "#612B09" },
       { id: 2, lowVal: 100, highVal: 200, enabled: true, colour: "#8C3D0E" },
       { id: 3, lowVal: 200, highVal: 255, enabled: true, colour: "#C76B0F" },
       // { id: 4, lowVal: 200, highVal: 255, enabled: true, colour: "#BD7616" },

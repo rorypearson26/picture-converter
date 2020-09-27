@@ -19,7 +19,7 @@ class FileUpload extends Component {
                 className="btn btn-primary"
                 onClick={onClick}
               >
-                Upload
+                Process
               </button>
             </span>
           </div>

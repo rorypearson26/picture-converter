@@ -21,26 +21,8 @@
   position: relative;
 }
 
-// @media only screen and (min-width: 1200px) {
-//   .container {
-//     max-width: 1600px !important;
-//   }
-// }
-
 @media (prefers-reduced-motion: reduce) {
   .fade {
     transition: none !important;
   }
 }
-
-// .my-container-clipped::after {
-//   content: "";
-//   box-shadow: 0 0 2rem 3rem #cc0000;
-//   background-color: #ffffff !important;
-//   position: absolute;
-//   top: 0;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-//   z-index: -1;
-// }
