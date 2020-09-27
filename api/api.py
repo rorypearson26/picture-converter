@@ -10,7 +10,7 @@ DEBUG = True
 app = Flask(__name__)
 
 # sanity check route
-@app.route('/imagetransfer', methods=['POST', 'GET'])
+@app.route('/api/imagetransfer', methods=['POST', 'GET'])
 def process_mosaic():
     if request.method == 'POST':
         image=request.files['image']

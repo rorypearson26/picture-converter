@@ -34,14 +34,13 @@ class Home extends Component {
 
   handleFile(e) {
     let file = e.target.files[0];
-
     // Occurs if cancel is selected
     if (typeof file === "undefined") {
       this.setState({ file: "https://picsum.photos/1000/700?grayscale" });
-    } else if (file.type !== "image/jpeg") {
+    } else if (file.type !== "image/jpeg" && file.type !== "image/png") {
       e.target.value = null;
       this.setState({ file: "https://picsum.photos/1000/700?grayscale" });
-      toast.error("File needs to be a jpeg image");
+      toast.error("File needs to be a jpeg or png");
     } else {
       this.setState({ file, displayUpload: true, displayCanvas: false });
     }
@@ -62,7 +61,7 @@ class Home extends Component {
     formData.append("userInput", JSON.stringify(inputData));
     this.setState({ fetchInProgress: true });
     await axios({
-      url: `/imagetransfer`,
+      url: `/api/imagetransfer`,
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
