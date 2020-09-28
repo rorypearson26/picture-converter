@@ -4,12 +4,17 @@ import image_to_double_coin
 import time
 
 # configuration
-DEBUG = True
+# DEBUG = True
 
 # instantiate the app
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../build", static_url_path="/")
 
-# sanity check route
+
+@app.route('/')
+def index():
+    return app.send_static_file("index.html")
+
+    
 @app.route('/api/imagetransfer', methods=['POST', 'GET'])
 def process_mosaic():
     if request.method == 'POST':
