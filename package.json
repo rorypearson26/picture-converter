@@ -2,6 +2,7 @@
   "name": "coin-mosaic",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://rorypearson26.github.io/picture-converter/",
   "dependencies": {
     "3": "^2.1.0",
     "-": "0.0.1",
@@ -38,7 +39,9 @@
     "start-api": "cd api/venv/bin && flask run",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
