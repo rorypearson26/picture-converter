@@ -8,7 +8,8 @@ class Jumbo extends Component {
         <div className="container text-center">
           <h1 className="display-4 ">Coin Mosaic</h1>
           <p className="lead">
-            Convert your pictures into pointless coin mosaics in one easy click.
+            Convert your pictures into excessively large coin mosaics in one
+            easy click.
           </p>
         </div>
       </div>
