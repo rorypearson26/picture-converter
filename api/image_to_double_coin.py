@@ -4,8 +4,8 @@ be either colour or greyscale; however, as the image is interpretted as
 greyscale, visibility of this could prompt edits that could give better
 results.
 """
-from cv2 import cv2
 import numpy as np
+from cv2 import cv2
 from PIL import ImageColor
 from random import randint, uniform
 import time
@@ -85,6 +85,7 @@ def setup(image, user_input):
     u = Input(image, user_input)
     outer = OuterMosaic(u)
     inner = InnerMosaic(outer, u)
+    get_colour_shades(outer.sliders, 0.2)
     get_stats(outer, inner)
     return (u, outer, inner)
 
@@ -129,6 +130,16 @@ def colour_randomiser(intensity, slider, colour):
         
         colour_new_formatted = f"rgb({colour_new[0]},{colour_new[1]},{colour_new[2]})"
     return colour_new_formatted
+
+def get_colour_shades(sliders, deviation):
+    """Create array of shades from darkest at index[0] to lightest at index[max]"""
+    total_sliders = len(outer.sliders)
+    shades_per_slider = round((100.0 * deviation * 2), None)
+    colour_shades = np.empty(total_sliders, shades_per_slider, dtype=str)
+    colour_new = np.empty(3, dtype=int)
+
+    for i, slider in enumerate(sliders):
+        colour = ImageColor.getrgb(slider['colour'])
 
 
 
@@ -185,6 +196,5 @@ def main(image, user_input):
     output = Output(outer, inner)
     pounds = (inner.width*inner.height + outer.height * outer.width)/100
     time_taken = int(round(time.time() * 1000)) - start_time
-    print(f'{time_taken}ms')
     return output.full_JSON
 

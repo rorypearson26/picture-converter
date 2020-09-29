@@ -60,8 +60,10 @@ class Home extends Component {
     formData.append("image", file);
     formData.append("userInput", JSON.stringify(inputData));
     this.setState({ fetchInProgress: true });
+    // https://coin-mosaic.herokuapp.com/api/imagetransfer
     await axios({
-      url: `/api/imagetransfer`,
+      // url: `https://coin-mosaic.herokuapp.com/api/imagetransfer`,
+      url: `http://127.0.0.1:5000/api/imagetransfer`,
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -69,9 +71,22 @@ class Home extends Component {
       data: formData,
       contentType: false,
       processData: false,
-    }).then((res) => {
-      this.handleReturn(res.data);
+    })
+      .then((res) => {
+        this.handleReturn(res.data);
+      })
+      .catch((error) => {
+        this.handleError(error);
+      });
+  }
+
+  handleError(error) {
+    console.log(error.response);
+    this.setState({
+      fetchInProgress: false,
+      displayCanvas: false,
     });
+    toast.error(`${error} occured whilst processing the image`);
   }
 
   handleReturn(result) {
