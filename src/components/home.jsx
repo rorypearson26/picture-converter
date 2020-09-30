@@ -90,6 +90,7 @@ class Home extends Component {
   }
 
   handleReturn(result) {
+    console.log("RETURNED");
     let { innerResponseData, outerResponseData } = this.state;
     const {
       width,
