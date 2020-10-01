@@ -61,8 +61,8 @@ class Home extends Component {
     formData.append("userInput", JSON.stringify(inputData));
     this.setState({ fetchInProgress: false });
     await axios({
-      // url: `https://coin-mosaic.herokuapp.com/api/imagetransfer`,
-      url: `https://coin-mosaic.azurewebsites.net/api/imagetransfer`,
+      url: `https://coin-mosaic.herokuapp.com/api/imagetransfer`,
+      // url: `https://coin-mosaic.azurewebsites.net/api/imagetransfer`,
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
