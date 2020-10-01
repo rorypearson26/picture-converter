@@ -115,10 +115,25 @@ def colour_mapping(sliders, colour_shades, mosaic_obj):
         slider_range = high_val - low_val + 1
         get_colour = lambda x: colour_shades[i, x]
 
-        f = np.logical_and(low_val <= coin_array, coin_array <= high_val)
+        f = np.logical_and(
+            low_val <= coin_array, coin_array <= (low_val + slider_range / 2)
+        )
         test_outarray = np.where(
             f,
-            np.random.randint(0, shade_variants, f.shape),
+            np.random.randint(0, shade_variants / 2, f.shape),
+            test_outarray,
+        )
+        mosaic_obj.coin_array = np.where(
+            f,
+            get_colour(test_outarray),
+            mosaic_obj.coin_array,
+        )
+        f = np.logical_and(
+            (low_val + slider_range / 2) <= coin_array, coin_array <= high_val
+        )
+        test_outarray = np.where(
+            f,
+            np.random.randint(shade_variants / 2, shade_variants, f.shape),
             test_outarray,
         )
 
@@ -127,10 +142,6 @@ def colour_mapping(sliders, colour_shades, mosaic_obj):
             get_colour(test_outarray),
             mosaic_obj.coin_array,
         )
-
-
-def get_random(i, coin_array):
-    return coin_array * 10 * uniform(0.95, 1.05)
 
 
 def colour_randomiser(deviation, colour):

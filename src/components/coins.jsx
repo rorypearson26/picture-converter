@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Coin from "./coin";
 import "./sliders.scss";
 
 class Coins extends Component {
   // Save png modified from https://mybyways.com/blog/convert-svg-to-png-using-your-browser
+
   buildSVG() {
     const { innerResponseData: inner, outerResponseData: outer } = this.props;
     const spacing = 1; // Value of 1 for touching coins
@@ -25,11 +25,12 @@ class Coins extends Component {
           {outer.coinArray.map((row, i) => (
             <g key={`outer${i}`}>
               {row.map((colour, j) => (
-                <Coin
+                <circle
                   key={`outer${i}${j}`}
                   cx={j * spacing + offset}
                   cy={i * spacing + offset}
-                  colour={colour}
+                  r="0.5"
+                  fill={colour}
                 />
               ))}
             </g>
@@ -39,11 +40,12 @@ class Coins extends Component {
           {inner.coinArray.map((row, i) => (
             <g key={`inner${i}`}>
               {row.map((colour, j) => (
-                <Coin
+                <circle
                   key={`inner${i}${j}`}
                   cx={j * spacing + spacing}
                   cy={i * spacing + spacing}
-                  colour={colour}
+                  r="0.5"
+                  fill={colour}
                 />
               ))}
             </g>
@@ -98,7 +100,10 @@ class Coins extends Component {
   }
 
   render() {
+    let startTime = Date.now();
     const mySVG = this.buildSVG();
+    let endTime = Date.now();
+    // console.log(endTime - startTime);
     return (
       <div className="align-items-center">
         {mySVG}

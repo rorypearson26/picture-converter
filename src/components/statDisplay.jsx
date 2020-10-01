@@ -13,18 +13,20 @@ class StatDisplay extends Component {
       <div className="container">
         <h1>The Headline Stats</h1>
         <table className="table ">
-          <tr>
-            <td className="text-center">Total Coins:</td>
-            <td className="text-center">{totalCoins}</td>
-          </tr>
-          <tr>
-            <td className="text-center">Time Taken:</td>
-            <td className="text-center">{totalTime}</td>
-          </tr>
-          <tr>
-            <td className="text-center">Mass of Mosaic:</td>
-            <td className="text-center">{totalMass} kg</td>
-          </tr>
+          <thead>
+            <tr>
+              <td className="text-center">Total Coins:</td>
+              <td className="text-center">{totalCoins}</td>
+            </tr>
+            <tr>
+              <td className="text-center">Time Taken:</td>
+              <td className="text-center">{totalTime}</td>
+            </tr>
+            <tr>
+              <td className="text-center">Mass of Mosaic:</td>
+              <td className="text-center">{totalMass} kg</td>
+            </tr>
+          </thead>
         </table>
       </div>
     );

@@ -59,11 +59,10 @@ class Home extends Component {
     let formData = new FormData();
     formData.append("image", file);
     formData.append("userInput", JSON.stringify(inputData));
-    this.setState({ fetchInProgress: true });
-    // https://coin-mosaic.herokuapp.com/api/imagetransfer
+    this.setState({ fetchInProgress: false });
     await axios({
       // url: `https://coin-mosaic.herokuapp.com/api/imagetransfer`,
-      url: `http://127.0.0.1:5000/api/imagetransfer`,
+      url: `https://coin-mosaic.azurewebsites.net/api/imagetransfer`,
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -81,16 +80,16 @@ class Home extends Component {
   }
 
   handleError(error) {
-    console.log(error.response);
-    this.setState({
-      fetchInProgress: false,
-      displayCanvas: false,
-    });
-    toast.error(`${error} occured whilst processing the image`);
+    if (error.response) {
+      toast.error(`${error.response} occured whilst processing the image`);
+    } else if (error.request) {
+      toast.error(`${error.request} occured whilst processing the image`);
+    } else {
+      toast.error(`${error} occured whilst processing the image`);
+    }
   }
 
   handleReturn(result) {
-    console.log("RETURNED");
     let { innerResponseData, outerResponseData } = this.state;
     const {
       width,
