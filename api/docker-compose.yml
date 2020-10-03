@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  flask:
+    # build: ./flask
+    image: rorypearson2605/coin-mosaic:api_flask1.0
+    container_name: flask
+    restart: always
+    environment:
+      - APP_NAME=Coin-Mosaic-App
+    expose:
+      - 8080
+
+  nginx:
+    # build: ./nginx
+    image: rorypearson2605/coin-mosaic:api_nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"

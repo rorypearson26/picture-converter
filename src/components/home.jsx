@@ -61,8 +61,9 @@ class Home extends Component {
     formData.append("userInput", JSON.stringify(inputData));
     this.setState({ fetchInProgress: false });
     await axios({
-      url: `https://coin-mosaic.herokuapp.com/api/imagetransfer`,
-      // url: `https://coin-mosaic.azurewebsites.net/api/imagetransfer`,
+      // url: `https://coin-mosaic.herokuapp.com/api/imagetransfer`,
+      // url: `http://localhost:80/api/imagetransfer`,
+      url: `https://coin-mosaic.azurewebsites.net/api/imagetransfer`,
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -99,7 +100,7 @@ class Home extends Component {
       stats,
     } = result.outer;
     outerResponseData = { width, height, coinArray, bgColour, stats };
-    console.log(result);
+    // console.log(result);
     if (result.inner !== "None") {
       const { width, height, coin_array: coinArray } = result.inner;
       innerResponseData = { width, height, coinArray };

@@ -1,0 +1,5 @@
+venv/
+testing/
+__pycache__/
+image_to_coin.py
+Procfile
