@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { Route, Redirect, Switch } from "react-router-dom";
 import "./App.css";
 import Home from "./components/home";
 import Jumbo from "./components/jumbo";
+import About from "./components/about";
+import NavBar from "./components/navBar";
 
 class App extends Component {
   state = {};
@@ -10,7 +13,11 @@ class App extends Component {
       <React.Fragment>
         <Jumbo />
         <main className="App">
-          <Home />
+          <Switch>
+            <Route path="/home" component={Home} />
+            <Route path="/about" component={About} />
+            <Redirect from="/" exact to="/home" />
+          </Switch>
         </main>
       </React.Fragment>
     );

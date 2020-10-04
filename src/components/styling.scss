@@ -1,8 +1,28 @@
 .jumbotron {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
+  // padding-top: 1rem !important;
+  // padding-bottom: 1rem !important;
+  // margin-bottom: 0rem !important;
+  text-align: center !important;
   color: white;
   background-color: #048b5f !important;
+}
+
+.strap-line {
+  margin-top: 0;
+  padding: 20px 0 !important;
+  text-align: center !important;
+  color: white;
+  background-color: #048b5f !important;
+}
+.link {
+  color: #ff0000;
+} /* CSS link color (red) */
+.link:hover {
+  color: #00ff00;
+} /* CSS link hover (green) */
+
+.link {
+  text-align: center !important;
 }
 
 .form-control:focus,

@@ -1,16 +1,19 @@
 import React, { Component } from "react";
+import NavBar from "./navBar";
 import "./styling.scss";
+import { Link } from "react-router-dom";
 
 class Jumbo extends Component {
   render() {
     return (
-      <div className="jumbotron jumbotron-fluid noselect">
-        <div className="container text-center">
-          <h1 className="display-4 ">Coin Mosaic</h1>
-          <p className="lead">
-            Convert your pictures into excessively large coin mosaics in one
-            easy click.
-          </p>
+      <div>
+        <Link className="display-3 text-center" to="/home">
+          Coin Mosaic
+        </Link>
+        <NavBar />
+        <div className="lead strap-line noselect">
+          Convert your pictures into excessively large coin mosaics in one easy
+          click.
         </div>
       </div>
     );

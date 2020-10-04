@@ -3,17 +3,18 @@ import InputForm from "./inputForm";
 import UploadedImage from "./uploadedImage";
 import Coins from "./coins";
 import Image from "react-bootstrap/Image";
+import StatDisplay from "./statDisplay";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { isEmpty } from "lodash";
-import loading from "../static/slow.gif";
+import Resizer from "react-image-file-resizer";
 import "react-toastify/dist/ReactToastify.css";
 import "./styling.scss";
-import StatDisplay from "./statDisplay";
 
 class Home extends Component {
   state = {
-    file: "https://picsum.photos/1000/700?grayscale",
+    file: "",
+    downscaledImage: "",
     displayCanvas: false,
     displayUpload: false,
     outerResponseData: {
@@ -32,23 +33,45 @@ class Home extends Component {
     fetchInProgress: false,
   };
 
-  handleFile(e) {
+  downscaleImage = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        900,
+        900,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "blob"
+      );
+    });
+
+  async handleFile(e) {
     let file = e.target.files[0];
     // Occurs if cancel is selected
     if (typeof file === "undefined") {
-      this.setState({ file: "https://picsum.photos/1000/700?grayscale" });
+      this.setState({ file: "", displayUpload: false });
     } else if (file.type !== "image/jpeg" && file.type !== "image/png") {
       e.target.value = null;
-      this.setState({ file: "https://picsum.photos/1000/700?grayscale" });
+      this.setState({ file: "" });
       toast.error("File needs to be a jpeg or png");
     } else {
-      this.setState({ file, displayUpload: true, displayCanvas: false });
+      const downscaledImage = await this.downscaleImage(file);
+      this.setState({
+        file,
+        downscaledImage,
+        displayUpload: true,
+        displayCanvas: false,
+      });
     }
   }
 
   async handleUpload(inputData) {
-    const { file } = this.state;
-    if (UploadedImage.validURL(file)) {
+    const { downscaledImage } = this.state;
+    if (UploadedImage.validURL(downscaledImage)) {
       toast.error("Need to select an image");
       return;
     }
@@ -57,7 +80,7 @@ class Home extends Component {
       return;
     }
     let formData = new FormData();
-    formData.append("image", file);
+    formData.append("image", downscaledImage);
     formData.append("userInput", JSON.stringify(inputData));
     this.setState({ fetchInProgress: false });
     await axios({
@@ -132,27 +155,22 @@ class Home extends Component {
     }
     return (
       <React.Fragment>
-        <div style={imageStyle}>
-          <div className="container">
-            <Image src={loading} alt="Loading..." fluid />
-          </div>
-        </div>
-
         <div style={mainStyle}>
           <ToastContainer />
           <div className="container">
-            <div className="row justify-content-center mb-4">
-              {displayCanvas ? (
+            {displayCanvas ? (
+              <div className="row justify-content-center mb-2 mt-2">
                 <StatDisplay data={outerResponseData.stats} />
-              ) : null}
-            </div>
+              </div>
+            ) : null}
+
             <div className="row justify-content-center mb-4">
-              <div className="col-xs-12 col-md-6">
+              <div className="col-xs-12 col-md-6 p-2">
                 {displayUpload ? (
                   <UploadedImage file={this.state.file} />
                 ) : null}
               </div>
-              <div className="col-xs-12 col-md-6">
+              <div className="col-xs-12 col-md-6 p-2">
                 {displayCanvas ? (
                   <Coins
                     innerResponseData={innerResponseData}

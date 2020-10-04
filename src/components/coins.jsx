@@ -4,6 +4,9 @@ import "./sliders.scss";
 class Coins extends Component {
   // Save png modified from https://mybyways.com/blog/convert-svg-to-png-using-your-browser
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   buildSVG() {
     const { innerResponseData: inner, outerResponseData: outer } = this.props;
     const spacing = 1; // Value of 1 for touching coins

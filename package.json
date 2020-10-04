@@ -26,6 +26,7 @@
     "react-compound-slider": "^2.5.0",
     "react-dom": "^16.13.1",
     "react-files": "^2.4.8",
+    "react-image-file-resizer": "^0.3.8",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-toastify": "^6.0.8",
