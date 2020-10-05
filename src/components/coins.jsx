@@ -104,12 +104,12 @@ class Coins extends Component {
 
   render() {
     let startTime = Date.now();
-    const mySVG = this.buildSVG();
+    // const mySVG = this.buildSVG();
     let endTime = Date.now();
-    // console.log(endTime - startTime);
+    console.log(endTime - startTime);
     return (
       <div className="align-items-center">
-        {mySVG}
+        {this.buildSVG()}
         <button
           onClick={(mySVG) => this.handleOnClick(mySVG)}
           className="btn btn-primary m-2"

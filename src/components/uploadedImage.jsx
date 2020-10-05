@@ -22,6 +22,7 @@ class UploadedImage extends Component {
 
   render() {
     const file = UploadedImage.srcFormatter(this.props.file);
+    window.scrollTo(0, 0);
     return (
       <div>
         <Image src={file} alt="This has not gone well" fluid />

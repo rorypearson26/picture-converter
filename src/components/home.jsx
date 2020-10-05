@@ -53,7 +53,7 @@ class Home extends Component {
     let file = e.target.files[0];
     // Occurs if cancel is selected
     if (typeof file === "undefined") {
-      this.setState({ file: "", displayUpload: false });
+      this.setState({ file: "", displayUpload: false, displayCanvas: false });
     } else if (file.type !== "image/jpeg" && file.type !== "image/png") {
       e.target.value = null;
       this.setState({ file: "" });
@@ -70,13 +70,13 @@ class Home extends Component {
   }
 
   async handleUpload(inputData) {
-    const { downscaledImage } = this.state;
-    if (UploadedImage.validURL(downscaledImage)) {
+    const { downscaledImage, file } = this.state;
+    if (file === "") {
       toast.error("Need to select an image");
       return;
     }
     if (!isEmpty(inputData.errors)) {
-      toast.error("Correct the error of your ways to proceed");
+      toast.error("The is some error in your input");
       return;
     }
     let formData = new FormData();
@@ -105,7 +105,7 @@ class Home extends Component {
 
   handleError(error) {
     if (error.response) {
-      toast.error(`${error.response} occured whilst processing the image`);
+      toast.error(`${error.message} occured whilst processing the image`);
     } else if (error.request) {
       toast.error(`${error.request} occured whilst processing the image`);
     } else {
@@ -123,7 +123,6 @@ class Home extends Component {
       stats,
     } = result.outer;
     outerResponseData = { width, height, coinArray, bgColour, stats };
-    // console.log(result);
     if (result.inner !== "None") {
       const { width, height, coin_array: coinArray } = result.inner;
       innerResponseData = { width, height, coinArray };
@@ -159,7 +158,7 @@ class Home extends Component {
           <ToastContainer />
           <div className="container">
             {displayCanvas ? (
-              <div className="row justify-content-center mb-2 mt-2">
+              <div className="row justify-content-center mb-2 mt-4">
                 <StatDisplay data={outerResponseData.stats} />
               </div>
             ) : null}

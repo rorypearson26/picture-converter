@@ -16,7 +16,7 @@ class App extends Component {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/about" component={About} />
-            <Redirect from="/" exact to="/home" />
+            <Redirect from="/*" exact to="/home" />
           </Switch>
         </main>
       </React.Fragment>

@@ -1,16 +1,41 @@
 import React, { Component } from "react";
 import NavBar from "./navBar";
 import "./styling.scss";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class Jumbo extends Component {
   render() {
     return (
       <div>
-        <Link className="display-3 text-center" to="/home">
-          Coin Mosaic
-        </Link>
-        <NavBar />
+        <div className="container-fluid">
+          <div className="row justify-content-md-center p-2">
+            <div className="col col-lg-2" />
+            <NavLink
+              to="/home"
+              style={{
+                color: "black",
+                textDecoration: "none",
+              }}
+              className="col-md-4 display-4  text-center"
+            >
+              Coin Mosaic
+            </NavLink>
+            <NavLink
+              to="/about"
+              style={{
+                color: "grey",
+                textDecoration: "none",
+              }}
+              activeStyle={{
+                fontWeight: "bold",
+                color: "black",
+              }}
+              className="col col-lg-2 display-6 text-center align-self-center "
+            >
+              About
+            </NavLink>
+          </div>
+        </div>
         <div className="lead strap-line noselect">
           Convert your pictures into excessively large coin mosaics in one easy
           click.
