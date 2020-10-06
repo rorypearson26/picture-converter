@@ -2,7 +2,7 @@
   "name": "coin-mosaic",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://rorypearson26.github.io/picture-converter/",
+  "homepage": "https://rorypearson26.github.io/picture-converter",
   "dependencies": {
     "3": "^2.1.0",
     "-": "0.0.1",

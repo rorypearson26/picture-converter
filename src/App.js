@@ -4,7 +4,6 @@ import "./App.css";
 import Home from "./components/home";
 import Jumbo from "./components/jumbo";
 import About from "./components/about";
-import NavBar from "./components/navBar";
 
 class App extends Component {
   state = {};
