@@ -13,7 +13,7 @@ class About extends Component {
         <div className="container text-justify mt-4">
           <h2 className="display-5 text-left">Overview</h2>
           <p>
-            The conversion process takes your image, coverts it to a low
+            The conversion process takes your image, converts it to a low
             resolution, greyscale image, and replaces the pixels with "coins".
             At the moment this combines a base layer of coins with an upper
             layer laid on top. Although this does almost double the amount of

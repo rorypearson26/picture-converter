@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import InputForm from "./inputForm";
 import UploadedImage from "./uploadedImage";
 import Coins from "./coins";
-import Image from "react-bootstrap/Image";
 import StatDisplay from "./statDisplay";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
@@ -144,13 +143,10 @@ class Home extends Component {
       fetchInProgress,
     } = this.state;
 
-    let imageStyle = {};
     let mainStyle = {};
 
     if (fetchInProgress) {
       mainStyle = { display: "none" };
-    } else {
-      imageStyle = { display: "none" };
     }
     return (
       <React.Fragment>

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import NavBar from "./navBar";
 import "./styling.scss";
 import { NavLink } from "react-router-dom";
 
@@ -23,6 +22,7 @@ class Jumbo extends Component {
             <NavLink
               to="/about"
               style={{
+                fontSize: "2em",
                 color: "grey",
                 textDecoration: "none",
               }}
@@ -30,7 +30,7 @@ class Jumbo extends Component {
                 fontWeight: "bold",
                 color: "black",
               }}
-              className="col col-lg-2 display-6 text-center align-self-center "
+              className="col col-lg-2 display-5 text-center align-self-center "
             >
               About
             </NavLink>
