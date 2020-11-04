@@ -1,6 +1,6 @@
 ## Coin Mosaic Picture Converter:
 
-Open [https://rorypearson26.github.io/picture-converter](https://rorypearson26.github.io/picture-converter) to view the live project.
+Open [https://rorypearson26.github.io/picture-converter](https://rorypearson26.github.io/picture-converter) to view the live project. A user guide can be viewed here: [https://rorypearson26.github.io/picture-converter/#/about](here).
 
 The project started life as a quick Python script to check the feasibility of making custom "coin-based" artwork as a side-job (sadly it is not); however, it was then used as a vehicle to improve understanding of technologies used across the full-stack. The main purpose of the web app is to upload a user image and convert it into a coin mosaic. The coin mosaic image, as well as the main stats from the conversion, are then shown to the user once the conversion is complete.
 
