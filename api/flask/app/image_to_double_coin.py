@@ -229,11 +229,9 @@ def main(image, user_input):
     start_time = round(time.time() * 1000, 3)
 
     colour_mapping(outer.sliders, colour_shades, outer)
-    # pixels_to_coins(outer.sliders, input_object.limits, outer, colour_shades)
     outer_time = round(time.time() * 1000, 3)
 
     colour_mapping(outer.sliders, colour_shades, inner)
-    # pixels_to_coins(outer.sliders, input_object.limits, inner, colour_shades)
     inner_time = round(time.time() * 1000, 3)
 
     outer.coin_array = outer.coin_array.tolist()

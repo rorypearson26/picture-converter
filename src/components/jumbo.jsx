@@ -32,7 +32,7 @@ class Jumbo extends Component {
               }}
               className="col col-lg-2 display-5 text-center align-self-center "
             >
-              About
+              Find Out More
             </NavLink>
           </div>
         </div>
