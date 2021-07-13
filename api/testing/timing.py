@@ -4,10 +4,9 @@ import os.path
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 )
-import image_to_double_coin
-from testing.dummy_request import dummy_request
+from api.flask.app import image_to_double_coin
+from api.testing.test_data.dummy_request import dummy_request
 import timeit
-from dummy_request import dummy_request
 from PIL import ImageColor
 
 
