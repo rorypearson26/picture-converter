@@ -2,7 +2,7 @@ from PIL import Image
 from pathlib import Path as p
 import numpy as np
 from cv2 import cv2
-
+from api.flask_my.app import image_to_double_coin
 
 def dummy_image():
     """Load test image into memory"""
@@ -55,3 +55,7 @@ def dummy_request():
     image = dummy_image()
 
     return (image, user_input)
+
+if __name__ == "__main__":
+    image, user_input = dummy_request()
+    image_to_double_coin.main(image, user_input)

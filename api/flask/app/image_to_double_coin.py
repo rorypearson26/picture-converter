@@ -247,3 +247,6 @@ def main(image, user_input):
     pounds = (inner.width * inner.height + outer.height * outer.width) / 100
     time_taken = int(round(time.time() * 1000)) - start_time
     return output.full_JSON
+
+if __name__ == "__main__":
+    main(image=1, user_input=2)
